@@ -82,7 +82,7 @@ public class Board extends JFrame implements ActionListener {
 
     //-----------------------------------------------------IA
     public void IA() {
-        for(int i = 1; i <= 2; i++){
+        while(!finished()){
             String sauvX = ((String)(verifCase.get(i))).split(":")[0];
             String sauvY = ((String)(verifCase.get(i))).split(":")[1];
             findKey( i+"");
@@ -217,19 +217,18 @@ public class Board extends JFrame implements ActionListener {
         }
     }
 
-    public void finished(){
-
+    public boolean finished(){
         String ordre = "";
         for(int i = 0; i < listElement.size(); i++) {
             ordre = ordre + ((JButton)listElement.get(i)).getText();
         }
-        System.out.println("---------");
         for(int i = 0; i < ordre.length() - 1; i++ ){
             if( ordre.charAt(i) > ordre.charAt(i + 1)){
                 verif = false;
             } else verif = true;
         }
         if(verif)System.out.println("Bravo");
+        return verif;
     }
 
     public void move(Object source){
