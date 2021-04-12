@@ -67,51 +67,42 @@ public class Board extends JFrame implements ActionListener {
         IA();
     }
 
-
-    //permet de trouver l'élément donc d'abord 1, puis 2 etc
-    public void findKey(String search){
-        for(int i = 0; i < listElement.size(); i++){
-            //System.out.println(((JButton)listElement.get(i)).getText());
-            if(((JButton)listElement.get(i)).getText().equals(search)) {
-                findKey.setX(((JButton)listElement.get(i)).getX());
-                findKey.setY(((JButton)listElement.get(i)).getY());
-            }
-        }
-
-    }
     //-----------------------------------------------------
 
     //-----------------------------------------------------IA
     public void IA() {
-        for(int i= 1; i <= 2; i++){
+        for(int i= 1; i <= 3; i++){
             String sauvX = ((String)(verifCase.get(i))).split(":")[0];
             String sauvY = ((String)(verifCase.get(i))).split(":")[1];
             findKey( i+"");
-            while( findKey.getX() != Integer.parseInt(sauvX) || findKey.getY() != Integer.parseInt(sauvY)) {
-                findKey( i+"");
-                findEmpty();
-                System.out.println("empty x : "+ empty.getX() + " y : " + empty.getY());
-                System.out.println("findkey x : "+ findKey.getX() + " y : " + findKey.getY());
-                //les conditions if et else if ne fonctionne que pour la première ligne
-                // de gauche a droite si 1 cote de X
-                if(findKey.getX() > empty.getX() && findKey.getX() - 195 == empty.getX() && findKey.getY() == empty.getY()) {
-                    moveIANearby();
+            if(i != 3) {
+                while( findKey.getX() != Integer.parseInt(sauvX) || findKey.getY() != Integer.parseInt(sauvY)) {
+                    findKey( i+"");
+                    findEmpty();
+                    System.out.println("empty x : "+ empty.getX() + " y : " + empty.getY());
+                    System.out.println("findkey x : "+ findKey.getX() + " y : " + findKey.getY());
+                    //les conditions if et else if ne fonctionne que pour la première ligne
+                    // de gauche a droite si 1 cote de X
+                    if(findKey.getX() > empty.getX() && findKey.getX() - 195 == empty.getX() && findKey.getY() == empty.getY()) {
+                        moveIANearby();
+                    }
+                    //de haute en bas si 1 cote de X
+                    else if(findKey.getY() > empty.getY() && findKey.getX() == empty.getX() && findKey.getY() - 187 == empty.getY()) {
+                        moveIANearby();
+                    }
+                    //Autre valeur
+                    else {
+                        moveIAOtherCase(i);
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    findKey(i+"");
                 }
-                //de haute en bas si 1 cote de X
-                else if(findKey.getY() > empty.getY() && findKey.getX() == empty.getX() && findKey.getY() - 187 == empty.getY()) {
-                    moveIANearby();
-                }
-                //Autre valeur
-                else {
-                    moveIAOtherCase(i);
-                }
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                findKey(i+"");
             }
+
         }
         System.out.println(verifCase.toString());
     }
@@ -216,6 +207,18 @@ public class Board extends JFrame implements ActionListener {
                 empty.setY(((JButton)listElement.get(i)).getY());
             }
         }
+    }
+
+    //permet de trouver l'élément donc d'abord 1, puis 2 etc
+    public void findKey(String search){
+        for(int i = 0; i < listElement.size(); i++){
+            //System.out.println(((JButton)listElement.get(i)).getText());
+            if(((JButton)listElement.get(i)).getText().equals(search)) {
+                findKey.setX(((JButton)listElement.get(i)).getX());
+                findKey.setY(((JButton)listElement.get(i)).getY());
+            }
+        }
+
     }
 
     public boolean finished(){
