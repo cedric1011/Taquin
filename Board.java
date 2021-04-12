@@ -221,7 +221,7 @@ public class Board extends JFrame implements ActionListener {
 
     }
 
-    public boolean finished(){
+    public boolean heuristic(){
         String ordre = "";
         for(int i = 0; i < listElement.size() - 1; i++) {
             ordre = ordre + ((JButton)listElement.get(i)).getText();
@@ -276,7 +276,7 @@ public class Board extends JFrame implements ActionListener {
                 ((JButton)source).getY() == (empty.getY() - 187)) {
             move(source);
         }
-        finished();
+        heuristic();
     }
     //-----------------------------------------------
 
