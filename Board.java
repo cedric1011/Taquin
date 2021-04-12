@@ -11,7 +11,7 @@ public class Board extends JFrame implements ActionListener {
     JButton l1, l2, l3, l4, l5, l6 , l7, l8, l9;
     Border border = LineBorder.createGrayLineBorder();
     Case empty = new Case(0, 0);
-    ArrayList<Component> listElement = new ArrayList<>();
+    ArrayList<Component> listElement;
 
     GridLayout grid = new GridLayout(3,3);
     String sauv = "";
@@ -22,7 +22,8 @@ public class Board extends JFrame implements ActionListener {
 
     private HashMap verifCase;
 
-    Board(HashMap verifCase) {
+    Board(ArrayList<Component> listElement, HashMap verifCase) {
+        this.listElement = listElement;
         this.verifCase = verifCase;
         setTitle("Taquin");
         setSize(600,600);
@@ -63,7 +64,7 @@ public class Board extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // a desactiver si on veut jouer solo
-        //IA();
+        IA();
     }
 
 
@@ -82,7 +83,7 @@ public class Board extends JFrame implements ActionListener {
 
     //-----------------------------------------------------IA
     public void IA() {
-        while(!finished()){
+        for(int i= 1; i <= 2; i++){
             String sauvX = ((String)(verifCase.get(i))).split(":")[0];
             String sauvY = ((String)(verifCase.get(i))).split(":")[1];
             findKey( i+"");
@@ -219,10 +220,11 @@ public class Board extends JFrame implements ActionListener {
 
     public boolean finished(){
         String ordre = "";
-        for(int i = 0; i < listElement.size(); i++) {
+        for(int i = 0; i < listElement.size() - 1; i++) {
             ordre = ordre + ((JButton)listElement.get(i)).getText();
         }
         for(int i = 0; i < ordre.length() - 1; i++ ){
+            System.out.println("ordre "+ ordre);
             if( ordre.charAt(i) > ordre.charAt(i + 1)){
                 verif = false;
             } else verif = true;
@@ -274,4 +276,24 @@ public class Board extends JFrame implements ActionListener {
         finished();
     }
     //-----------------------------------------------
+
+
+    public static void main(String[] args) {
+
+
+        HashMap verifCase = new HashMap();
+        verifCase.put(1, "0:1");
+        verifCase.put(2, "195:1");
+        verifCase.put(3, "390:1");
+        verifCase.put(4, "0:188");
+        verifCase.put(5, "195:188");
+        verifCase.put(6, "390:188");
+        verifCase.put(7, "0:395");
+        verifCase.put(8, "195:395");
+
+
+        PriorityQueue file = new PriorityQueue();
+        ArrayList<Component> listElement = new ArrayList<>();
+        Board frame = new Board(listElement, verifCase);
+    }
 }
